@@ -19,9 +19,9 @@ import { UserModule } from './user/user.module';
 
     //   autoLoadEntities: true,
     // }),
+    DatabaseModule,
     UserModule,
     AuthModule,
-    DatabaseModule,
   ],
   controllers: [],
   providers: [],
