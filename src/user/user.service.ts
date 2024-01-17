@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { User } from './entity/user.entity';
 import { UserProviderKey } from 'src/user/constants';
 import { mapSignupDtoToUser } from './mappers';
+import * as argon from 'argon2';
 
 @Injectable()
 export class UserService {
@@ -12,8 +13,9 @@ export class UserService {
     private userRepository: Repository<User>,
   ) {}
 
-  createUser(dto: SignupDto) {
-    const user = mapSignupDtoToUser(dto);
-    this.userRepository.create(user);
+  async createUser(dto: SignupDto) {
+    const hash = await argon.hash(dto.getPassword());
+    const user = mapSignupDtoToUser(dto.setPassword(hash));
+    await this.userRepository.save(user);
   }
 }
