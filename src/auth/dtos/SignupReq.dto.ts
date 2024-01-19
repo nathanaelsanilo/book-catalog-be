@@ -9,11 +9,6 @@ export class SignupDto {
   @IsNotEmpty()
   private password: string;
 
-  constructor(val?: SignupDto) {
-    this.password = val.password;
-    this.username = val.username;
-  }
-
   setUsername(value: string): this {
     this.username = value;
     return this;

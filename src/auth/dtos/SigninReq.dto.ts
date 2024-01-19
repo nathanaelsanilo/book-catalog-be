@@ -1,11 +1,13 @@
-export class SigninDto {
-  private username = '';
-  private password = '';
+import { IsNotEmpty, IsString } from 'class-validator';
 
-  constructor(val?: SigninDto) {
-    this.username = val?.username;
-    this.password = val?.password;
-  }
+export class SigninDto {
+  @IsNotEmpty()
+  @IsString()
+  private username = '';
+
+  @IsNotEmpty()
+  @IsString()
+  private password = '';
 
   setUsername(value: string): this {
     this.username = value;

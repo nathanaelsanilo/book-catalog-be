@@ -17,13 +17,13 @@ export class AuthController {
 
   @Post('signup')
   signup(@Body() dto: SignupDto) {
-    return this.authService.signup(new SignupDto(dto));
+    return this.authService.signup(dto);
   }
 
   @HttpCode(HttpStatus.OK)
   @Post('signin')
   signin(@Body() dto: SigninDto) {
-    return this.authService.signin(new SigninDto(dto));
+    return this.authService.signin(dto);
   }
 
   @UseGuards(JwtAuthGuard)
