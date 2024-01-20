@@ -7,4 +7,10 @@ export class Author {
 
   @Column()
   name: string;
+
+  @Column()
+  email: string;
+
+  @Column()
+  phone: string;
 }

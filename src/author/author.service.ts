@@ -14,11 +14,15 @@ export class AuthorService {
   async createAuthor(dto: CreateAuthorDto): Promise<DetailAuthorDto> {
     const author = new Author();
     author.name = dto.getAuthorName();
+    author.email = dto.getEmail();
+    author.phone = dto.getPhone();
 
     await this.authorRepository.save(author);
 
     const res = new DetailAuthorDto();
     res.setAuthorName(author.name);
+    res.setEmail(author.email);
+    res.setPhone(author.phone);
 
     return res;
   }
