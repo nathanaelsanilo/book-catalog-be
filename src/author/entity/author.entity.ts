@@ -1,9 +1,13 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, Generated, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('authors')
 export class Author {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Generated('uuid')
+  @Column()
+  secureId: string;
 
   @Column()
   name: string;

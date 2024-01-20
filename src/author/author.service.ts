@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { AuthorProviderKey } from './constants';
-import { CreateAuthorDto, DetailAuthorDto } from './dtos';
+import { CreateAuthorDto, DetailAuthorDto, ListAuthorDto } from './dtos';
 import { Author } from './entity/author.entity';
 
 @Injectable()
@@ -23,6 +23,20 @@ export class AuthorService {
     res.setAuthorName(author.name);
     res.setEmail(author.email);
     res.setPhone(author.phone);
+
+    return res;
+  }
+
+  async getList(): Promise<ListAuthorDto[]> {
+    const authors = await this.authorRepository.find();
+    const res = authors.map((e) => {
+      const dto = new ListAuthorDto();
+      dto.email = e.email;
+      dto.name = e.name;
+      dto.phone = e.phone;
+      dto.secureId = e.secureId;
+      return dto;
+    });
 
     return res;
   }
