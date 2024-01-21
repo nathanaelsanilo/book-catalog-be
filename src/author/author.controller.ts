@@ -38,4 +38,9 @@ export class AuthorController {
   ): Promise<DetailAuthorDto> {
     return this.authorService.update(authorSecureId, dto);
   }
+
+  @Get(':secureId')
+  getDetail(@Param('secureId') secureId: string): Promise<DetailAuthorDto> {
+    return this.authorService.getDetail(secureId);
+  }
 }

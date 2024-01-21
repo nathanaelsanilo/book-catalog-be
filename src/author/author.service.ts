@@ -63,9 +63,28 @@ export class AuthorService {
     const saved = await this.authorRepository.save(author);
 
     const detail = new DetailAuthorDto();
-    dto.setAuthorName(saved.name);
-    dto.setEmail(saved.email);
-    dto.setPhone(saved.phone);
+    detail.setAuthorName(saved.name);
+    detail.setEmail(saved.email);
+    detail.setPhone(saved.phone);
+
+    return detail;
+  }
+
+  /**
+   * get detail author by secure id
+   * @param secureId author secure id
+   */
+  async getDetail(secureId: string): Promise<DetailAuthorDto> {
+    const author = await this.authorRepository.findOne({
+      where: {
+        secureId,
+      },
+    });
+
+    const detail = new DetailAuthorDto();
+    detail.setAuthorName(author.name);
+    detail.setEmail(author.email);
+    detail.setPhone(author.phone);
 
     return detail;
   }
