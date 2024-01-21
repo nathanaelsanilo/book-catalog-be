@@ -1,7 +1,20 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/guard';
 import { AuthorService } from './author.service';
-import { CreateAuthorDto, DetailAuthorDto, ListAuthorDto } from './dtos';
+import {
+  CreateAuthorDto,
+  DetailAuthorDto,
+  ListAuthorDto,
+  UpdateAuthorDto,
+} from './dtos';
 
 @UseGuards(JwtAuthGuard)
 @Controller('author')
@@ -16,5 +29,13 @@ export class AuthorController {
   @Get()
   getList(): Promise<ListAuthorDto[]> {
     return this.authorService.getList();
+  }
+
+  @Patch(':authorSecureId')
+  updateAuthor(
+    @Body() dto: UpdateAuthorDto,
+    @Param('authorSecureId') authorSecureId: string,
+  ): Promise<DetailAuthorDto> {
+    return this.authorService.update(authorSecureId, dto);
   }
 }
