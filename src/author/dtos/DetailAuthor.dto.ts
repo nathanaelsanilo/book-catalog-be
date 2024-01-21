@@ -7,6 +7,17 @@ export class DetailAuthorDto {
   private email: string = '';
   @IsString()
   private phone: string = '';
+  @IsString()
+  private secureId: string = '';
+
+  setSecureId(value: string): this {
+    this.secureId = value;
+    return this;
+  }
+
+  getSecureId() {
+    return this.secureId;
+  }
 
   setAuthorName(val: string): this {
     this.author_name = val;

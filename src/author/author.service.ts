@@ -16,6 +16,16 @@ export class AuthorService {
     private authorRepository: Repository<Author>,
   ) {}
 
+  mapAuthorToDetailDto(author: Author): DetailAuthorDto {
+    const detail = new DetailAuthorDto();
+    detail.setAuthorName(author.name);
+    detail.setEmail(author.email);
+    detail.setPhone(author.phone);
+    detail.setSecureId(author.secureId);
+
+    return detail;
+  }
+
   async createAuthor(dto: CreateAuthorDto): Promise<DetailAuthorDto> {
     const author = new Author();
     author.name = dto.getAuthorName();
@@ -24,10 +34,7 @@ export class AuthorService {
 
     await this.authorRepository.save(author);
 
-    const res = new DetailAuthorDto();
-    res.setAuthorName(author.name);
-    res.setEmail(author.email);
-    res.setPhone(author.phone);
+    const res = this.mapAuthorToDetailDto(author);
 
     return res;
   }
@@ -62,10 +69,7 @@ export class AuthorService {
 
     const saved = await this.authorRepository.save(author);
 
-    const detail = new DetailAuthorDto();
-    detail.setAuthorName(saved.name);
-    detail.setEmail(saved.email);
-    detail.setPhone(saved.phone);
+    const detail = this.mapAuthorToDetailDto(saved);
 
     return detail;
   }
@@ -81,10 +85,7 @@ export class AuthorService {
       },
     });
 
-    const detail = new DetailAuthorDto();
-    detail.setAuthorName(author.name);
-    detail.setEmail(author.email);
-    detail.setPhone(author.phone);
+    const detail = this.mapAuthorToDetailDto(author);
 
     return detail;
   }

@@ -3,15 +3,15 @@ import { IsEmail, IsOptional, IsString } from 'class-validator';
 export class UpdateAuthorDto {
   @IsOptional()
   @IsString()
-  private author_name: string = '';
+  private author_name?: string = '';
 
   @IsOptional()
   @IsEmail()
-  private email: string = '';
+  private email?: string = '';
 
   @IsOptional()
   @IsString()
-  private phone: string = '';
+  private phone?: string = '';
 
   setAuthorName(val: string): this {
     this.author_name = val;
