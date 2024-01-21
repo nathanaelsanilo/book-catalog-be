@@ -1,8 +1,9 @@
 import { Exclude } from 'class-transformer';
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, Generated } from 'typeorm';
 
 @Entity()
 export class User {
+  @Exclude()
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -12,4 +13,8 @@ export class User {
   @Exclude()
   @Column()
   password: string;
+
+  @Generated('uuid')
+  @Column()
+  secureId: string;
 }
