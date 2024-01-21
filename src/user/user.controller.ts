@@ -1,4 +1,10 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  UseGuards,
+} from '@nestjs/common';
 import { GetUser } from './decorators';
 import { UserDetailResDto } from './dtos';
 import { User } from './entity/user.entity';
@@ -10,6 +16,7 @@ import { JwtAuthGuard } from 'src/auth/guard';
 export class UserController {
   constructor(private userService: UserService) {}
 
+  @HttpCode(HttpStatus.OK)
   @Get('me')
   getMe(@GetUser() user: User): Promise<UserDetailResDto> {
     return this.userService.getMe(user);

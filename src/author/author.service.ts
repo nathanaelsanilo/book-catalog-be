@@ -57,7 +57,7 @@ export class AuthorService {
     authorSecureId: string,
     dto: UpdateAuthorDto,
   ): Promise<DetailAuthorDto> {
-    const author = await this.authorRepository.findOne({
+    const author = await this.authorRepository.findOneOrFail({
       where: {
         secureId: authorSecureId,
       },
@@ -79,7 +79,7 @@ export class AuthorService {
    * @param secureId author secure id
    */
   async getDetail(secureId: string): Promise<DetailAuthorDto> {
-    const author = await this.authorRepository.findOne({
+    const author = await this.authorRepository.findOneOrFail({
       where: {
         secureId,
       },
@@ -88,5 +88,21 @@ export class AuthorService {
     const detail = this.mapAuthorToDetailDto(author);
 
     return detail;
+  }
+
+  /**
+   * @description delete author by secure id
+   * @param secureId author secure id
+   */
+  async deleteAuthor(secureId: string): Promise<DetailAuthorDto> {
+    const author = await this.authorRepository.findOneOrFail({
+      where: {
+        secureId,
+      },
+    });
+
+    const removed = await this.authorRepository.remove(author);
+
+    return this.mapAuthorToDetailDto(removed);
   }
 }

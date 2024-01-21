@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -42,5 +43,10 @@ export class AuthorController {
   @Get(':secureId')
   getDetail(@Param('secureId') secureId: string): Promise<DetailAuthorDto> {
     return this.authorService.getDetail(secureId);
+  }
+
+  @Delete(':secureId')
+  delete(@Param('secureId') secureId: string): Promise<DetailAuthorDto> {
+    return this.authorService.deleteAuthor(secureId);
   }
 }
