@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { CategoryProviderKey } from './constants';
-import { CategoryCreateDto, CategoryDetailDto } from './dtos';
+import { CategoryCreateDto, CategoryDetailDto, CategoryListDto } from './dtos';
 import { Category } from './entity/category.entity';
 
 @Injectable()
@@ -29,5 +29,20 @@ export class CategoryService {
 
     const saved = await this.categoryRepository.save(newCat);
     return this.mapCategoryToDetail(saved);
+  }
+
+  /**
+   * @description get all category
+   */
+  async getList(): Promise<CategoryListDto[]> {
+    const categories = await this.categoryRepository.find({
+      order: { name: 'ASC' },
+    });
+    const dto: CategoryListDto[] = categories.map((item) => ({
+      name: item.name,
+      secureId: item.secureId,
+    }));
+
+    return dto;
   }
 }
