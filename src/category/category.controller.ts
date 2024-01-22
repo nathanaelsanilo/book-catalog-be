@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/guard';
 import { CategoryService } from './category.service';
 import { CategoryCreateDto, CategoryDetailDto, CategoryListDto } from './dtos';
@@ -16,5 +25,11 @@ export class CategoryController {
   @Get()
   getList(): Promise<CategoryListDto[]> {
     return this.categoryService.getList();
+  }
+
+  @HttpCode(HttpStatus.OK)
+  @Get(':secureId')
+  getDetail(@Param('secureId') secureId: string): Promise<CategoryDetailDto> {
+    return this.categoryService.getDetail(secureId);
   }
 }

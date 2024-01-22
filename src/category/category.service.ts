@@ -45,4 +45,16 @@ export class CategoryService {
 
     return dto;
   }
+
+  /**
+   * get detail category by secure id
+   * @param secureId category secure id
+   */
+  async getDetail(secureId: string): Promise<CategoryDetailDto> {
+    const category = await this.categoryRepository.findOne({
+      where: { secureId },
+    });
+
+    return this.mapCategoryToDetail(category);
+  }
 }
