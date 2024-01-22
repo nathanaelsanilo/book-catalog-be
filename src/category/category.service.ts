@@ -1,7 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { CategoryProviderKey } from './constants';
-import { CategoryCreateDto, CategoryDetailDto, CategoryListDto } from './dtos';
+import {
+  CategoryCreateDto,
+  CategoryDetailDto,
+  CategoryListDto,
+  CategoryUpdateDto,
+} from './dtos';
 import { Category } from './entity/category.entity';
 
 @Injectable()
@@ -47,7 +52,7 @@ export class CategoryService {
   }
 
   /**
-   * get detail category by secure id
+   * @description get detail category by secure id
    * @param secureId category secure id
    */
   async getDetail(secureId: string): Promise<CategoryDetailDto> {
@@ -56,5 +61,26 @@ export class CategoryService {
     });
 
     return this.mapCategoryToDetail(category);
+  }
+
+  /**
+   * @description update category by secure id
+   * @param secureId category secure id
+   * @param dto update payload
+   */
+  async update(
+    secureId: string,
+    dto: CategoryUpdateDto,
+  ): Promise<CategoryDetailDto> {
+    const category = await this.categoryRepository.findOneOrFail({
+      where: { secureId },
+    });
+
+    category.description = dto.description;
+    category.name = dto.name;
+
+    const saved = await this.categoryRepository.save(category);
+
+    return this.mapCategoryToDetail(saved);
   }
 }
