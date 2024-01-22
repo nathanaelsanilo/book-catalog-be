@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpStatus,
@@ -45,5 +46,12 @@ export class CategoryController {
     @Body() dto: CategoryUpdateDto,
   ): Promise<CategoryDetailDto> {
     return this.categoryService.update(secureId, dto);
+  }
+
+  @Delete(':secureId')
+  deleteCategory(
+    @Param('secureId') secureId: string,
+  ): Promise<CategoryDetailDto> {
+    return this.categoryService.deleteCategory(secureId);
   }
 }

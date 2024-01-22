@@ -83,4 +83,17 @@ export class CategoryService {
 
     return this.mapCategoryToDetail(saved);
   }
+
+  /**
+   * @description soft delete category by secure id
+   * @param secureId category secure id
+   */
+  async deleteCategory(secureId: string): Promise<CategoryDetailDto> {
+    const category = await this.categoryRepository.findOne({
+      where: { secureId },
+    });
+    const deleted = await this.categoryRepository.softRemove(category);
+
+    return this.mapCategoryToDetail(deleted);
+  }
 }

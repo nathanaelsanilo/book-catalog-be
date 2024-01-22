@@ -1,4 +1,10 @@
-import { Column, Entity, Generated, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  DeleteDateColumn,
+  Entity,
+  Generated,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity('category')
 export class Category {
@@ -14,4 +20,7 @@ export class Category {
 
   @Column()
   description: string;
+
+  @DeleteDateColumn({ name: 'deleted_date' })
+  deletedDate: Date;
 }
