@@ -5,6 +5,7 @@ import { AuthorModule } from './author/author.module';
 import { DatabaseModule } from './database/database.module';
 import { UserModule } from './user/user.module';
 import { CategoryModule } from './category/category.module';
+import { PublisherModule } from './publisher/publisher.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { CategoryModule } from './category/category.module';
     }),
     AuthorModule,
     CategoryModule,
+    PublisherModule,
   ],
   controllers: [],
   providers: [],
