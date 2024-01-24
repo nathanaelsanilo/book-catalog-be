@@ -24,6 +24,9 @@ export class Publisher {
   @Column()
   description: string;
 
+  @Column()
+  active: boolean;
+
   @DeleteDateColumn({ name: 'deleted_date' })
   deletedDate: Date;
 }

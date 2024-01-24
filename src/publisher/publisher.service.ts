@@ -20,6 +20,7 @@ export class PublisherService {
       const dto = new PublisherListDto();
       dto.email = e.email;
       dto.name = e.name;
+      dto.secureId = e.secureId;
 
       return dto;
     });
