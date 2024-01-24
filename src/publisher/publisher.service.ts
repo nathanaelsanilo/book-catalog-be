@@ -1,8 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { Publisher } from './entity/publisher.entity';
 import { PublisherProviderKey } from './constants';
-import { PublisherListDto } from './dtos';
+import {
+  PublisherCreateDto,
+  PublisherDetailDto,
+  PublisherListDto,
+} from './dtos';
+import { Publisher } from './entity/publisher.entity';
 
 @Injectable()
 export class PublisherService {
@@ -26,5 +30,27 @@ export class PublisherService {
     });
 
     return dtos;
+  }
+
+  mapPublisherToDetail(entity: Publisher): PublisherDetailDto {
+    const dto = new PublisherDetailDto();
+    dto.active = entity.active;
+    dto.description = entity.description;
+    dto.email = entity.email;
+    dto.name = entity.name;
+    dto.secureId = entity.secureId;
+
+    return dto;
+  }
+
+  async create(dto: PublisherCreateDto) {
+    const ent = new Publisher();
+    ent.active = dto.active;
+    ent.description = dto.description;
+    ent.email = dto.email;
+    ent.name = dto.name;
+    const saved = await this.publisherRepository.save(ent);
+
+    return this.mapPublisherToDetail(saved);
   }
 }
