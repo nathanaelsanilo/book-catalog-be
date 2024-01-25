@@ -5,6 +5,7 @@ import {
   PublisherCreateDto,
   PublisherDetailDto,
   PublisherListDto,
+  PublisherUpdateDto,
 } from './dtos';
 import { Publisher } from './entity/publisher.entity';
 
@@ -66,5 +67,30 @@ export class PublisherService {
     });
 
     return this.mapPublisherToDetail(publisher);
+  }
+
+  /**
+   * update publisher by secure id
+   * @param secureId publisher secure id
+   * @param dto update dto
+   */
+  async update(
+    secureId: string,
+    dto: PublisherUpdateDto,
+  ): Promise<PublisherDetailDto> {
+    const publisher = await this.publisherRepository.findOneOrFail({
+      where: {
+        secureId,
+      },
+    });
+
+    publisher.active = dto.active;
+    publisher.description = dto.description;
+    publisher.email = dto.email;
+    publisher.name = dto.name;
+
+    const updated = await this.publisherRepository.save(publisher);
+
+    return this.mapPublisherToDetail(updated);
   }
 }
