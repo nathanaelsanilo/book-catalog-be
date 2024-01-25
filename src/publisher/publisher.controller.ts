@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/guard';
 import {
   PublisherCreateDto,
@@ -20,5 +20,10 @@ export class PublisherController {
   @Post()
   create(@Body() dto: PublisherCreateDto): Promise<PublisherDetailDto> {
     return this.publisherService.create(dto);
+  }
+
+  @Get(':secureId')
+  getDetail(@Param('secureId') secureId: string): Promise<PublisherDetailDto> {
+    return this.publisherService.getDetail(secureId);
   }
 }

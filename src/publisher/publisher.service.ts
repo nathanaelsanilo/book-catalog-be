@@ -43,7 +43,7 @@ export class PublisherService {
     return dto;
   }
 
-  async create(dto: PublisherCreateDto) {
+  async create(dto: PublisherCreateDto): Promise<PublisherDetailDto> {
     const ent = new Publisher();
     ent.active = dto.active;
     ent.description = dto.description;
@@ -52,5 +52,19 @@ export class PublisherService {
     const saved = await this.publisherRepository.save(ent);
 
     return this.mapPublisherToDetail(saved);
+  }
+
+  /**
+   * get detail publisher by secure id
+   * @param secureId publisher secure id
+   */
+  async getDetail(secureId: string): Promise<PublisherDetailDto> {
+    const publisher = await this.publisherRepository.findOneOrFail({
+      where: {
+        secureId,
+      },
+    });
+
+    return this.mapPublisherToDetail(publisher);
   }
 }
